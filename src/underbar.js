@@ -113,9 +113,33 @@
   };
 
   // Produce a duplicate-free version of the array.
+  //should handle iterators that work with a sorted array
   _.uniq = function(array, isSorted, iterator) {
+    //new empty array for if no iterator to return uniq values, uniqArr
+    var uniqArr = [];
+    //empty array for if iterator to return transformed, iterArr
+    var iterArr = []
+    //if isSorted && iterator
+    if(isSorted && iterator) {
+      //loop through array
+      for(var i = 0; i < array.length; i++) {
+        //if element isn't in iterator array, push result of element passed through iterator into iterator array
+        if(!(iterArr.includes(array[i]))) {
+          iterArr.push(iterator(array[i]));
+          uniqArr.push(array[i]);
+        }
+      }
+    } else { // else
+      //loop through main array
+      for(var k = 0; k < array.length; k++) {
+        //if array[k] is not in uniqArr, push array[k] into it
+        if(!uniqArr.includes(array[k])) {
+          uniqArr.push(array[k]);
+        }
+      }
+    }
+    return uniqArr;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
