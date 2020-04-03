@@ -124,7 +124,7 @@
       //loop through array
       for(var i = 0; i < array.length; i++) {
         //if element isn't in iterator array, push result of element passed through iterator into iterator array
-        if(!(iterArr.includes(array[i]))) {
+        if(!iterArr.includes(iterator(array[i]))) {
           iterArr.push(iterator(array[i]));
           uniqArr.push(array[i]);
         }
