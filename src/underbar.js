@@ -280,7 +280,30 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+
+  // square = function(number) {return x ** 2;}
+  // squareTwo = _.memoize(square(2));
+  // First call will do the function, any future calls will return the value from the function.
+  // squareFour = _.memoize(square(4));
+  // This is different from squareTwo...it does the function first time around again.
+  // Both are stored in the pastArgs object though.
   _.memoize = function(func) {
+    var pastArgs = {};
+    
+      return function() {
+        var funcArgs = Array.from(arguments);
+        var stringedArgs = JSON.stringify(arguments);
+        // If stringedArgs is in pastArgs...
+        if(pastArgs[stringedArgs] !== undefined) {
+          // Return pastArgs' stored value.
+          return pastArgs[stringedArgs];
+        } else {// Else... (if not there)
+          // Run the function and store the results.
+          pastArgs[stringedArgs] = func.apply(null, funcArgs);
+          // Return the results.
+          return pastArgs[stringedArgs];
+        }
+      }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
